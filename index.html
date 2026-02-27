@@ -15,7 +15,7 @@
 
 <div id="loginScreen" class="fixed inset-0 bg-gray-900 flex items-center justify-center p-6 z-[100]">
     <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center">
-        <h2 class="text-2xl font-bold mb-6">🔒 Acceso Privado</h2>
+        <h2 class="text-2xl font-bold mb-6 text-gray-800">🔒 Acceso Privado</h2>
         <input id="userInp" type="text" placeholder="Usuario" class="border p-3 w-full mb-4 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-center">
         <input id="passInp" type="password" placeholder="Contraseña" class="border p-3 w-full mb-6 rounded-lg outline-none focus:ring-2 focus:ring-blue-500 text-center">
         <button onclick="checkLogin()" class="bg-blue-600 text-white w-full p-3 rounded-lg font-bold hover:bg-blue-700 transition">Entrar</button>
@@ -24,30 +24,35 @@
 </div>
 
 <div id="mainApp" class="hidden">
-    <div class="flex justify-around bg-white p-3 rounded-xl mb-4 shadow-sm font-medium sticky top-0 z-40">
-        <button id="navMudanza" onclick="switchApp('compras')" class="nav-active pb-1">📦 Mudanza</button>
-        <button id="navSuper" onclick="switchApp('supermercado')" class="pb-1">🛒 Supermercado</button>
+    <div class="flex justify-around bg-white p-3 rounded-xl mb-4 shadow-sm font-medium sticky top-0 z-40 border border-gray-200">
+        <button id="navMudanza" onclick="switchApp('compras')" class="nav-active pb-1 px-4 transition-all">📦 Mudanza</button>
+        <button id="navSuper" onclick="switchApp('supermercado')" class="pb-1 px-4 transition-all">🛒 Supermercado</button>
     </div>
 
-    <h1 id="appTitle" class="text-2xl font-bold text-center mb-4">📦 Lista de Mudanza</h1>
+    <h1 id="appTitle" class="text-2xl font-bold text-center mb-4 text-gray-800">📦 Lista de Mudanza</h1>
 
     <div class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-200">
-        <h2 class="font-bold mb-2 text-gray-700 text-sm uppercase">➕ Agregar Artículo</h2>
-        <input id="newName" placeholder="Nombre" class="border p-2 w-full mb-2 rounded-lg">
-        <input id="newPrice" type="number" placeholder="Precio RD$" class="border p-2 w-full mb-2 rounded-lg">
-        <select id="categorySelect" class="border p-2 w-full mb-2 rounded-lg bg-white w-full" onchange="toggleNewCategoryInput()"></select>
-        <input id="newCategoryInput" placeholder="Nueva categoría" class="border p-2 w-full mb-2 rounded-lg hidden">
-        <button onclick="addItem()" class="bg-blue-600 text-white w-full p-2 rounded-lg font-bold">Agregar</button>
+        <h2 class="font-bold mb-2 text-gray-700 text-xs uppercase tracking-wider">➕ Agregar Artículo</h2>
+        <div class="grid grid-cols-2 gap-2 mb-2">
+            <input id="newName" placeholder="Nombre" class="border p-2 rounded-lg text-sm outline-none focus:border-blue-500">
+            <input id="newPrice" type="number" placeholder="Precio RD$" class="border p-2 rounded-lg text-sm outline-none focus:border-blue-500">
+        </div>
+        <select id="categorySelect" class="border p-2 w-full mb-2 rounded-lg bg-white text-sm" onchange="toggleNewCategoryInput()"></select>
+        <input id="newCategoryInput" placeholder="Nueva categoría" class="border p-2 w-full mb-2 rounded-lg hidden text-sm">
+        <button onclick="addItem()" class="bg-blue-600 text-white w-full p-2 rounded-lg font-bold active:scale-95 transition-transform">Agregar a la lista</button>
     </div>
 
     <div id="content"></div>
 
-    <div class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] z-50">
-        <div class="flex justify-between text-sm mb-1">
-            <span id="labelTotal">Total:</span> <span class="font-bold text-blue-600">RD$ <span id="totalSpan">0</span></span>
+    <div class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.1)] z-50">
+        <div class="flex justify-between text-xs mb-1 text-gray-500">
+            <span>Presupuesto Total:</span> <span>RD$ <span id="totalSpan">0</span></span>
         </div>
-        <div class="flex justify-between text-lg border-t pt-1">
-            <span class="font-bold">Falta pagar:</span> <span class="font-bold text-red-600">RD$ <span id="remainSpan">0</span></span>
+        <div class="flex justify-between text-xs mb-2 text-green-600 font-medium">
+            <span>Ya comprado (Pagado):</span> <span>RD$ <span id="boughtSpan">0</span></span>
+        </div>
+        <div class="flex justify-between text-lg border-t pt-2 font-bold">
+            <span class="text-gray-800 font-black italic">FALTA PAGAR:</span> <span class="text-red-600">RD$ <span id="remainSpan">0</span></span>
         </div>
     </div>
 </div>
@@ -75,16 +80,14 @@
     let currentPath = 'compras'; 
     let data = {};
 
-    // DATOS MUDANZA
     const initMudanza = {
         "🔌 Electrodomésticos":[["🧺 Lavadora",68000,true],["🧊 Nevera",52000,true],["🔥 Estufa",62000,true],["🥤 Licuadora",6000,false],["❄️ Aire",35800,true],["📺 TV",40000,false],["🍲 Microondas",7800,true],["🍞 Tostadora",6795,true],["🍟 Freidora",5000,false],["🛢️ Extractor",10000,false],["🧃 Jugo",5000,false]],
         "🪑 Muebles":[["🛋️ Mueble",70000,false],["🍽️ Comedor",70000,false],["🗄️ Gavetero",20000,false],["📦 Credenza",10000,false],["🛏️ Mesitas",12000,false]],
         "⚡ Energía y gas":[["🔋 Inversor",34000,false],["⛽ Tanques gas",10000,false]],
-        "🏠 Hogar":[["🌀 Abanico",3500,false],["👔 Plancha",3000,false],["🪟 Cortinas",5000,false],["🛏️ Sábanas",5000,false],["🛌 Almohadas",5000,false],["🍳 Ollas",10000,false],["🍽️ Platos",10000,false]],
-        "🍽️ Utensilios":[["🍽️ Platos",1100,false],["🥄 Cucharas",300,false],["🥛 Vasos",695,false],["🍳 Sartenes",2000,false],["☕ Greca",865,true]]
+        "🏠 Hogar":[["🌀 Abanico",3500,false],["👔 Plancha",3000,false],["🪟 Cortinas",5000,false],["🛏️ Sábanas",5000,false],["🛌 Almohadas",5000,false],["🖼️ Cuadros",5000,false],["🪞 Espejos",5000,false],["🪄 Palo cortina",5000,false],["🪑 Sillas",1500,false],["🍳 Ollas",10000,false],["🍽️ Platos",10000,false],["🏋️ Gym",30000,false]],
+        "🍽️ Utensilios":[["🍽️ Platos",1100,false],["🥣 Hondos",660,false],["🥄 Cucharas",300,false],["🍴 Tenedores",300,false],["🔪 Cuchillos",500,false],["🥛 Vasos",695,false],["🍷 Copas",515,false],["☕ Tazas",500,false],["🍳 Sartenes",2000,false],["🔪 Carne",1000,true],["🪵 Tabla",1000,true],["📦 Porta",850,true],["☕ Greca",865,true]]
     };
 
-    // DATOS SUPERMERCADO
     const initSuper = {
         "🥩 Carnes y Embutidos": [["Pollo Entero", 450, false], ["Res para guisar", 380, false], ["Chuleta Ahumada", 250, false], ["Salami Super", 300, false], ["Jamón Cocido", 180, false]],
         "🥛 Lácteos y Huevos": [["Leche Entera", 75, false], ["Queso de Hoja", 150, false], ["Mantequilla", 90, false], ["Cartón Huevos (30)", 220, false]],
@@ -107,8 +110,8 @@
 
     window.switchApp = (path) => {
         currentPath = path;
-        document.getElementById("navMudanza").className = path === 'compras' ? 'nav-active pb-1' : 'pb-1';
-        document.getElementById("navSuper").className = path === 'supermercado' ? 'nav-active pb-1' : 'pb-1';
+        document.getElementById("navMudanza").className = path === 'compras' ? 'nav-active pb-1 px-4 transition-all' : 'pb-1 px-4 transition-all';
+        document.getElementById("navSuper").className = path === 'supermercado' ? 'nav-active pb-1 px-4 transition-all' : 'pb-1 px-4 transition-all';
         document.getElementById("appTitle").innerText = path === 'compras' ? '📦 Lista de Mudanza' : '🛒 Compras Supermercado';
         loadData();
     };
@@ -139,7 +142,7 @@
         let price = Number(document.getElementById("newPrice").value);
         let cat = document.getElementById("categorySelect").value;
         if(cat === "__new__") cat = document.getElementById("newCategoryInput").value.trim();
-        if(!name || !price || !cat) return alert("Faltan datos");
+        if(!name || !price || !cat) return alert("Por favor completa los campos");
         if(!data[cat]) data[cat] = [];
         data[cat].push([name, price, false]);
         set(ref(db, currentPath), data);
@@ -174,17 +177,19 @@
                 let item = document.createElement("div");
                 item.className = "bg-white p-3 rounded-xl flex items-center gap-2 mt-2 shadow-sm border border-gray-100";
                 item.innerHTML = `
-                    <input type="checkbox" ${it[2]?'checked':''} onclick="toggle('${cat}',${i})" class="w-6 h-6 rounded">
-                    <input value="${it[0]}" onchange="updateName('${cat}',${i},this.value)" class="flex-grow ${it[2]?'bought text-gray-400':'text-gray-700'}">
-                    <div class="flex items-center text-xs text-gray-400">RD$
-                        <input type="number" value="${it[1]}" onchange="updatePrice('${cat}',${i},this.value)" class="w-16 ml-1 font-bold text-black border-b border-gray-200 text-right">
+                    <input type="checkbox" ${it[2]?'checked':''} onclick="toggle('${cat}',${i})" class="w-6 h-6 rounded border-gray-300">
+                    <input value="${it[0]}" onchange="updateName('${cat}',${i},this.value)" class="flex-grow text-sm ${it[2]?'bought text-gray-400':'text-gray-700 font-medium'} outline-none bg-transparent">
+                    <div class="flex items-center text-[10px] text-gray-400">RD$
+                        <input type="number" value="${it[1]}" onchange="updatePrice('${cat}',${i},this.value)" class="w-16 ml-1 font-bold text-black border-b border-gray-100 text-right text-xs outline-none focus:border-blue-400 bg-transparent">
                     </div>
-                    <button onclick="delItem('${cat}',${i})" class="text-red-300 text-2xl ml-1">×</button>`;
+                    <button onclick="delItem('${cat}',${i})" class="text-red-300 text-2xl ml-1 leading-none">×</button>`;
                 cont.appendChild(item);
             });
         });
         document.getElementById("totalSpan").innerText = t.toLocaleString();
+        document.getElementById("boughtSpan").innerText = b.toLocaleString();
         document.getElementById("remainSpan").innerText = r.toLocaleString();
+        
         const sel = document.getElementById("categorySelect");
         const curr = sel.value; sel.innerHTML = "";
         cats.forEach(c => sel.add(new Option(c, c)));
