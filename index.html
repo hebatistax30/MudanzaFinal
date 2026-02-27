@@ -9,7 +9,6 @@
         .bought{ text-decoration: line-through; opacity:.5 }
         .category-header { background: linear-gradient(to right, #f3f4f6, #ffffff); border-left: 4px solid #2563eb; }
         .nav-active { border-bottom: 4px solid #2563eb; color: #2563eb; font-weight: bold; }
-        .tab-btn { transition: all 0.3s; border-bottom: 3px solid transparent; }
     </style>
 </head>
 <body class="bg-gray-100 p-4 pb-44">
@@ -17,52 +16,42 @@
 <div id="loginScreen" class="fixed inset-0 bg-gray-900 flex items-center justify-center p-6 z-[100]">
     <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md text-center border-t-8 border-blue-600">
         <h2 class="text-2xl font-bold mb-2 text-gray-800">🔒 Acceso Privado</h2>
-        <p class="text-blue-600 font-medium mb-6 text-sm bg-blue-50 p-3 rounded-lg border border-blue-100">
-            Esta App es para la mudanza de Katherine y Henrry
-        </p>
-        <input id="userInp" type="text" placeholder="Usuario" class="border p-3 w-full mb-4 rounded-lg outline-none text-center">
-        <input id="passInp" type="password" placeholder="Contraseña" class="border p-3 w-full mb-6 rounded-lg outline-none text-center">
-        <button onclick="checkLogin()" class="bg-blue-600 text-white w-full p-3 rounded-lg font-bold active:scale-95 transition-transform">Entrar</button>
+        <input id="userInp" type="text" placeholder="Usuario" class="border p-3 w-full mb-4 rounded-lg text-center outline-none">
+        <input id="passInp" type="password" placeholder="Contraseña" class="border p-3 w-full mb-6 rounded-lg text-center outline-none">
+        <button onclick="checkLogin()" class="bg-blue-600 text-white w-full p-3 rounded-lg font-bold active:scale-95">Entrar</button>
     </div>
 </div>
 
 <div id="mainApp" class="hidden">
-    <div class="bg-white rounded-xl mb-4 shadow-sm sticky top-0 z-40 border border-gray-200">
-        <div class="flex justify-around items-center p-2">
-            <button id="navMudanza" onclick="switchApp('compras')" class="tab-btn nav-active py-2 px-2 text-xs">📦 Mudanza</button>
-            <button id="navSuper" onclick="switchApp('supermercado')" class="tab-btn py-2 px-2 text-xs text-gray-400">🛒 Súper</button>
-            <button id="navZafacon" onclick="switchApp('zafacon')" class="tab-btn py-2 px-2 text-xs text-gray-400">🗑️ Zafacón</button>
-            <button onclick="shareWhatsApp()" class="bg-green-500 text-white p-2 rounded-lg shadow-sm active:scale-90">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
-            </button>
+    <div class="flex items-center bg-white p-2 rounded-xl mb-4 shadow-sm sticky top-0 z-40 border border-gray-200">
+        <div class="flex justify-around flex-grow font-medium">
+            <button id="navMudanza" onclick="switchApp('compras')" class="nav-active pb-1 px-2 text-xs">📦 Mudanza</button>
+            <button id="navSuper" onclick="switchApp('supermercado')" class="pb-1 px-2 text-xs text-gray-400">🛒 Súper</button>
+            <button id="navZafacon" onclick="switchApp('zafacon')" class="pb-1 px-2 text-xs text-gray-400">🗑️ Zafacón</button>
         </div>
+        <button onclick="shareWhatsApp()" class="bg-green-500 text-white p-2 rounded-lg ml-2 shadow-sm active:scale-90">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+        </button>
     </div>
 
-    <h1 id="appTitle" class="text-xl font-bold text-center mb-4 text-gray-800 uppercase">📦 Lista de Mudanza</h1>
+    <h1 id="appTitle" class="text-xl font-bold text-center mb-4 text-gray-800 uppercase">📦 Mudanza</h1>
 
     <div id="addItemForm" class="bg-white p-4 rounded-xl mb-4 shadow-sm border border-gray-200">
-        <h2 class="font-bold mb-2 text-gray-700 text-xs uppercase italic">➕ Agregar Artículo</h2>
         <div class="grid grid-cols-2 gap-2 mb-2">
             <input id="newName" placeholder="Nombre" class="border p-2 rounded-lg text-sm outline-none">
             <input id="newPrice" type="number" placeholder="RD$" class="border p-2 rounded-lg text-sm outline-none">
         </div>
         <select id="categorySelect" class="border p-2 w-full mb-2 rounded-lg bg-white text-sm" onchange="toggleNewCategoryInput()"></select>
         <input id="newCategoryInput" placeholder="Nueva categoría" class="border p-2 w-full mb-2 rounded-lg hidden text-sm">
-        <button onclick="addItem()" class="bg-blue-600 text-white w-full p-2 rounded-lg font-bold active:scale-95 transition-all">Agregar</button>
+        <button onclick="addItem()" class="bg-blue-600 text-white w-full p-2 rounded-lg font-bold">Agregar</button>
     </div>
 
     <div id="content"></div>
 
     <div id="footerTotals" class="fixed bottom-0 left-0 right-0 bg-white p-4 border-t shadow-[0_-4px_10px_-1px_rgba(0,0,0,0.1)] z-50">
-        <div class="flex justify-between text-xs mb-1 text-gray-500">
-            <span>Presupuesto Total:</span> <span class="font-bold text-black">RD$ <span id="totalSpan">0</span></span>
-        </div>
-        <div class="flex justify-between text-xs mb-2 text-green-600 font-medium">
-            <span>Ya comprado (Pagado):</span> <span>RD$ <span id="boughtSpan">0</span></span>
-        </div>
-        <div class="flex justify-between text-lg border-t pt-2 font-bold">
-            <span class="text-gray-800 font-black italic uppercase text-sm">Falta Pagar:</span> <span class="text-red-600">RD$ <span id="remainSpan">0</span></span>
-        </div>
+        <div class="flex justify-between text-xs mb-1 text-gray-500"><span>Presupuesto Total:</span> <span class="font-bold text-black">RD$ <span id="totalSpan">0</span></span></div>
+        <div class="flex justify-between text-xs mb-2 text-green-600 font-medium"><span>Ya pagado:</span> <span>RD$ <span id="boughtSpan">0</span></span></div>
+        <div class="flex justify-between text-lg border-t pt-2 font-bold"><span class="text-sm">FALTA PAGAR:</span> <span class="text-red-600">RD$ <span id="remainSpan">0</span></span></div>
     </div>
 </div>
 
@@ -88,22 +77,22 @@
         "🔌 Electrodomésticos":[["🧺 Lavadora",68000,true],["🧊 Nevera",52000,true],["🔥 Estufa",62000,true],["🥤 Licuadora",6000,false],["❄️ Aire",35800,true],["📺 TV",40000,false],["🍲 Microondas",7800,true],["🍞 Tostadora",6795,true],["🍟 Freidora",5000,false],["🧃 Extractor",10000,false]],
         "🪑 Muebles":[["🛋️ Mueble",70000,false],["🍽️ Comedor",70000,false],["🗄️ Gavetero",20000,false],["📦 Credenza",10000,false],["🛏️ Mesitas",12000,false]],
         "⚡ Energía y gas":[["🔋 Inversor",34000,false],["⛽ Tanques gas",10000,false]],
-        "🏠 Hogar":[["🌀 Abanico",3500,false],["👔 Plancha",3000,false],["🪟 Cortinas",5000,false],["🛏️ Sábanas",5000,false],["🛌 Almohadas",5000,false],["🖼️ Cuadros",5000,false],["🪞 Espejos",5000,false],["🪄 Palo cortina",5000,false],["🪑 Sillas",1500,false],["🍳 Ollas",10000,false],["🏋️ Gym",30000,false]],
+        "🏠 Hogar":[["🌀 Abanico",3500,false],["👔 Plancha",3000,false],["🪟 Cortinas",5000,false],["🛏️ Sábanas",5000,false],["🛌 Almohadas",5000,false],["🖼️ Cuadros",5000,false],["🪞 Espejos",5000,false],["🪄 Palo cortina",5000,false],["🪑 Sillas",1500,false],["🍳 Ollas",10000,false],["🍽️ Platos",10000,false],["🏋️ Gym",30000,false]],
         "🍽️ Utensilios":[["🍽️ Platos",1100,false],["🥣 Hondos",660,false],["🥄 Cucharas",300,false],["🍴 Tenedores",300,false],["🔪 Cuchillos",500,false],["🥛 Vasos",695,false],["🍷 Copas",515,false],["☕ Tazas",500,false],["🍳 Sartenes",2000,false],["🔪 Carne",1000,true],["🪵 Tabla",1000,true],["📦 Porta",850,true],["☕ Greca",865,true]]
     };
 
     const initSuper = {
-        "🥩 Carnes y proteínas": [["Pollo entero", 450, false], ["Pechuga", 350, false], ["Carne molida", 280, false], ["Cerdo", 300, false], ["Res", 400, false], ["Chuleta", 250, false], ["Salami", 200, false], ["Jamón", 150, false], ["Salchicha", 120, false], ["Longaniza", 180, false], ["Sardina", 60, false], ["Tuna", 85, false], ["Camarones", 600, false], ["Salmón", 800, false], ["Huevos", 220, false], ["Pescado fresco", 350, false], ["Tocino", 200, false], ["Chorizo", 250, false]],
-        "🥛 Lácteos": [["Queso", 250, false], ["Mantequilla", 80, false], ["Leche Carnation", 65, false], ["Leche Listamilk", 75, false], ["Yogurts", 150, false], ["Queso crema", 180, false], ["Crema de leche", 120, false], ["Margarina", 70, false]],
-        "🌾 Granos, cereales y pastas": [["Arroz", 350, false], ["Avena", 60, false], ["Espaguetis", 45, false], ["Galleta de soda", 50, false], ["Confleck", 250, false], ["Pan integral", 110, false], ["Harina de maíz", 40, false], ["Harina de trigo", 50, false], ["Lentejas", 70, false]],
-        "🥔 Víveres": [["Plátano", 250, false], ["Guineito", 100, false], ["Yautía", 150, false], ["Papa", 120, false], ["Yuca", 80, false], ["Batata", 60, false], ["Ñame", 140, false]],
-        "🥬 Vegetales": [["Brócoli", 120, false], ["Coliflor", 130, false], ["Repollo", 70, false], ["Lechuga", 60, false], ["Tomate", 90, false], ["Pepino", 50, false], ["Zanahoria", 60, false], ["Ají", 80, false], ["Cebolla", 70, false], ["Ajo", 100, false], ["Limón", 60, false], ["Habichuela", 85, false], ["Verduras mixtas", 40, false], ["Apio", 45, false], ["Auyama", 80, false], ["Berenjena", 60, false], ["Espinaca", 110, false], ["Remolacha", 55, false]],
-        "🍎 Frutas": [["Manzana", 150, false], ["Uvas", 250, false], ["Guineo", 60, false], ["Piña", 100, false], ["Lechosa", 120, false], ["Naranja", 100, false], ["Mango", 150, false], ["Pera", 130, false], ["Mandarina", 120, false]],
-        "🥫 Enlatados": [["Guandules", 85, false], ["Habichuela lata", 75, false], ["Soppita", 60, false], ["Salsa china", 50, false], ["Maíz en lata", 65, false], ["Salsa de tomate", 60, false], ["Atún en aceite", 90, false]],
-        "🧂 Condimentos": [["Sal", 25, false], ["Azúcar", 60, false], ["Pimienta", 50, false], ["Orégano", 40, false], ["Canela", 45, false], ["Vinagre", 55, false], ["Salsa", 60, false], ["Mayonesa", 130, false], ["Ketchup", 90, false], ["Mostaza", 75, false], ["Aceite", 500, false], ["Aceite de oliva", 450, false], ["Cubito pollo/res", 60, false], ["Comino", 45, false], ["Adobo completo", 85, false], ["Sazón líquido", 120, false]],
-        "🍫 Dulces y bebidas": [["Chocolate", 60, false], ["Café", 250, false], ["Cartón de jugo", 100, false], ["Té", 80, false], ["Malta", 150, false], ["Refrescos", 120, false], ["Mermelada", 140, false], ["Azúcar morena", 70, false]],
-        "🧼 Limpieza": [["Mistolin", 110, false], ["Brillo fregar", 45, false], ["Cloro", 75, false], ["Ace líquido", 450, false], ["Suavitel", 180, false], ["Jabón lavar", 60, false], ["Jabón fregar", 85, false], ["Escoba", 250, false], ["Suape", 150, false], ["Recogedor", 120, false], ["Cubeta", 350, false], ["Desinfectante", 130, false], ["Esponjas", 50, false], ["Guantes", 100, false], ["Ambientador", 180, false]],
-        "🧻 Higiene personal": [["Papel baño", 250, false], ["Pasta dental", 160, false], ["Jabón", 70, false], ["Papel toalla", 120, false], ["Servilletas", 60, false], ["Shampoo", 350, false], ["Desodorante", 200, false], ["Afeitadora", 150, false], ["Alcohol", 110, false], ["Papel húmedo", 180, false]]
+        "🥩 Carnes": [["Pollo entero", 450, false], ["Pechuga", 350, false], ["Carne molida", 280, false], ["Res", 400, false], ["Salami", 200, false], ["Jamón", 150, false], ["Huevos", 220, false]],
+        "🥛 Lácteos": [["Queso", 250, false], ["Mantequilla", 80, false], ["Leche Carnation", 65, false], ["Leche Listamilk", 75, false], ["Yogurts", 150, false]],
+        "🌾 Granos y Pastas": [["Arroz", 350, false], ["Avena", 60, false], ["Espaguetis", 45, false], ["Galleta de soda", 50, false], ["Confleck", 250, false], ["Lentejas", 70, false]],
+        "🥔 Víveres": [["Plátano", 250, false], ["Papa", 120, false], ["Yuca", 80, false]],
+        "🥬 Vegetales": [["Tomate", 90, false], ["Cebolla", 70, false], ["Ajo", 100, false], ["Limón", 60, false], ["Ají", 80, false], ["Lechuga", 60, false]],
+        "🍎 Frutas": [["Manzana", 150, false], ["Guineo", 60, false], ["Piña", 100, false]],
+        "🥫 Enlatados": [["Guandules", 85, false], ["Habichuela lata", 75, false], ["Maíz", 65, false], ["Salsa tomate", 60, false]],
+        "🧂 Condimentos": [["Sal", 25, false], ["Aceite", 500, false], ["Mayonesa", 130, false], ["Ketchup", 90, false], ["Sopita", 60, false]],
+        "🍫 Dulces": [["Café", 250, false], ["Azúcar", 60, false], ["Chocolate", 60, false], ["Jugo", 100, false]],
+        "🧼 Limpieza": [["Mistolin", 110, false], ["Cloro", 75, false], ["Detergente Ace", 450, false], ["Suavitel", 180, false], ["Jabón fregar", 85, false], ["Escoba", 250, false]],
+        "🧻 Higiene": [["Papel baño", 250, false], ["Pasta dental", 160, false], ["Jabón", 70, false], ["Desodorante", 200, false], ["Shampoo", 350, false]]
     };
 
     window.checkLogin = () => {
@@ -114,31 +103,49 @@
 
     window.switchApp = (path) => {
         currentPath = path;
-        const btns = { 'compras': 'navMudanza', 'supermercado': 'navSuper', 'zafacon': 'navZafacon' };
-        Object.values(btns).forEach(id => document.getElementById(id).className = "tab-btn py-2 px-2 text-xs text-gray-400");
-        document.getElementById(btns[path]).className = "tab-btn nav-active py-2 px-2 text-xs text-blue-600 font-bold";
-        document.getElementById("appTitle").innerText = path === 'zafacon' ? '🗑️ Zafacón' : (path === 'compras' ? '📦 Mudanza' : '🛒 Supermercado');
+        ['navMudanza', 'navSuper', 'navZafacon'].forEach(id => document.getElementById(id).className = "pb-1 px-2 text-xs text-gray-400");
+        const activeId = path === 'compras' ? 'navMudanza' : (path === 'supermercado' ? 'navSuper' : 'navZafacon');
+        document.getElementById(activeId).className = "nav-active pb-1 px-2 text-xs text-blue-600 font-bold";
+        
+        document.getElementById("appTitle").innerText = path === 'zafacon' ? '🗑️ Zafacón' : (path === 'compras' ? '📦 Mudanza' : '🛒 Súper');
         document.getElementById("addItemForm").style.display = path === 'zafacon' ? 'none' : 'block';
         document.getElementById("footerTotals").style.display = path === 'zafacon' ? 'none' : 'block';
         loadData();
     };
 
     function loadData() {
-        onValue(ref(db, currentPath), (snapshot) => {
+        onValue(ref(db, currentPath), (snapshot) => { 
             const val = snapshot.val();
-            if (val) { data = val; } else {
-                if (currentPath === 'compras') data = initMudanza;
-                else if (currentPath === 'supermercado') data = initSuper;
+            if(val) { data = val; } else {
+                if(currentPath === 'compras') data = initMudanza;
+                else if(currentPath === 'supermercado') data = initSuper;
                 else data = {};
-                if (currentPath !== 'zafacon') set(ref(db, currentPath), data);
+                if(currentPath !== 'zafacon') set(ref(db, currentPath), data);
             }
-            render();
+            render(); 
         });
         get(ref(db, 'zafacon')).then(snap => { zafacon = snap.val() || {}; });
     }
 
+    window.updateName = (cat, i, v) => { data[cat][i][0] = v; set(ref(db, currentPath), data); };
+    window.updatePrice = (cat, i, v) => { data[cat][i][1] = Number(v); set(ref(db, currentPath), data); };
+    window.renameCategory = (old) => { let n = prompt("Nuevo nombre:", old); if(n && n !== old) { data[n] = data[old]; delete data[old]; set(ref(db, currentPath), data); } };
+    window.deleteCategory = (c) => { if(confirm("¿Borrar categoría completa?")){ delete data[c]; set(ref(db, currentPath), data); }};
+    window.toggle = (cat, i) => { data[cat][i][2] = !data[cat][i][2]; set(ref(db, currentPath), data); };
+    window.toggleNewCategoryInput = () => { document.getElementById("newCategoryInput").classList.toggle("hidden", document.getElementById("categorySelect").value !== "__new__"); };
+
+    window.addItem = () => {
+        let name = document.getElementById("newName").value.trim(), price = Number(document.getElementById("newPrice").value), cat = document.getElementById("categorySelect").value;
+        if(cat === "__new__") cat = document.getElementById("newCategoryInput").value.trim();
+        if(!name || !price || !cat) return;
+        if(!data[cat]) data[cat] = [];
+        data[cat].push([name, price, false]);
+        set(ref(db, currentPath), data);
+        document.getElementById("newName").value = ""; document.getElementById("newPrice").value = "";
+    };
+
     window.delItem = (cat, i) => {
-        if(!confirm("¿Borrar?")) return;
+        if(!confirm("¿Mover al zafacón?")) return;
         const item = data[cat][i];
         if(!zafacon[cat]) zafacon[cat] = [];
         zafacon[cat].push([...item, currentPath]);
@@ -152,51 +159,36 @@
         const item = data[cat][i];
         const origin = item[3];
         get(ref(db, origin)).then(snap => {
-            let originData = snap.val() || {};
-            if(!originData[cat]) originData[cat] = [];
-            originData[cat].push([item[0], item[1], item[2]]);
-            set(ref(db, origin), originData);
+            let oData = snap.val() || {};
+            if(!oData[cat]) oData[cat] = [];
+            oData[cat].push([item[0], item[1], item[2]]);
+            set(ref(db, origin), oData);
             data[cat].splice(i,1);
             if(!data[cat].length) delete data[cat];
             set(ref(db, 'zafacon'), data);
         });
     };
 
-    window.addItem = () => {
-        let name = document.getElementById("newName").value.trim(), price = Number(document.getElementById("newPrice").value), cat = document.getElementById("categorySelect").value;
-        if(cat === "__new__") cat = document.getElementById("newCategoryInput").value.trim();
-        if(!name || !price || !cat) return;
-        if(!data[cat]) data[cat] = [];
-        data[cat].push([name, price, false]);
-        set(ref(db, currentPath), data);
-        document.getElementById("newName").value = ""; document.getElementById("newPrice").value = "";
-    };
-
-    window.toggle = (cat, i) => { data[cat][i][2] = !data[cat][i][2]; set(ref(db, currentPath), data); };
-    window.updatePrice = (cat, i, v) => { data[cat][i][1] = Number(v); set(ref(db, currentPath), data); };
-
     function render() {
         let cont = document.getElementById("content"), t=0, b=0, r=0;
         cont.innerHTML = "";
         Object.keys(data).forEach(cat => {
             let div = document.createElement("div");
-            div.className = "category-header flex justify-between mt-6 p-2 rounded-r-lg font-bold text-gray-800 shadow-sm text-sm";
-            div.innerHTML = `<span>${cat}</span>`;
+            div.className = "category-header flex justify-between mt-6 p-2 rounded-r-lg font-bold text-gray-800 text-sm";
+            div.innerHTML = `<span>${cat}</span>` + (currentPath !== 'zafacon' ? `<div class="flex gap-2 text-[10px] font-normal"><button onclick="renameCategory('${cat}')" class="text-blue-500">Edit</button><button onclick="deleteCategory('${cat}')" class="text-red-500">Del</button></div>` : "");
             cont.appendChild(div);
             data[cat].forEach((it, i) => {
                 t+=it[1]; it[2]? b+=it[1] : r+=it[1];
                 let item = document.createElement("div");
                 item.className = "bg-white p-3 rounded-xl flex items-center gap-2 mt-2 shadow-sm border border-gray-100";
                 if(currentPath !== 'zafacon') {
-                    item.innerHTML = `
-                        <input type="checkbox" ${it[2]?'checked':''} onclick="toggle('${cat}',${i})" class="w-6 h-6 rounded border-gray-300">
-                        <span class="flex-grow text-sm ${it[2]?'bought text-gray-400':'text-gray-700 font-medium'}">${it[0]}</span>
+                    item.innerHTML = `<input type="checkbox" ${it[2]?'checked':''} onclick="toggle('${cat}',${i})" class="w-5 h-5">
+                        <input value="${it[0]}" onchange="updateName('${cat}',${i},this.value)" class="flex-grow text-sm ${it[2]?'bought text-gray-400':'text-gray-700'} outline-none bg-transparent">
                         <div class="flex items-center text-[10px] text-gray-400">RD$
-                            <input type="number" value="${it[1]}" onchange="updatePrice('${cat}',${i},this.value)" class="w-16 ml-1 font-bold text-black text-right text-xs outline-none bg-transparent">
-                        </div>
-                        <button onclick="delItem('${cat}',${i})" class="text-red-400 text-xl ml-2">🗑️</button>`;
+                        <input type="number" value="${it[1]}" onchange="updatePrice('${cat}',${i},this.value)" class="w-16 ml-1 font-bold text-black text-right text-xs outline-none bg-transparent"></div>
+                        <button onclick="delItem('${cat}',${i})" class="text-red-300 text-xl ml-1">×</button>`;
                 } else {
-                    item.innerHTML = `<span class="flex-grow text-sm text-gray-500">${it[0]}</span><button onclick="restoreItem('${cat}',${i})" class="bg-blue-100 text-blue-600 px-3 py-1 rounded-lg text-xs font-bold uppercase">Restaurar</button>`;
+                    item.innerHTML = `<span class="flex-grow text-sm text-gray-500">${it[0]}</span><button onclick="restoreItem('${cat}',${i})" class="bg-blue-600 text-white px-3 py-1 rounded-lg text-[10px] font-bold">RESTAURAR</button>`;
                 }
                 cont.appendChild(item);
             });
@@ -216,10 +208,10 @@
     window.shareWhatsApp = () => {
         let msg = `*🛒 PENDIENTES*\n\n`;
         Object.keys(data).forEach(cat => {
-            let itemsFalta = data[cat].filter(it => !it[2]);
-            if(itemsFalta.length > 0) {
-                msg += `*${cat}*\n`;
-                itemsFalta.forEach(it => msg += `- ${it[0]}\n`);
+            let items = data[cat].filter(it => !it[2]);
+            if(items.length > 0) {
+                msg += `*${cat.toUpperCase()}*\n`;
+                items.forEach(it => msg += `- ${it[0]} (RD$ ${it[1]})\n`);
             }
         });
         window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
