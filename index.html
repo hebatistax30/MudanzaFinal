@@ -28,7 +28,6 @@
 📲 Guardar como App
 </button>
 
-<!-- Agregar artículo -->
 <div class="bg-white p-4 rounded-xl mb-4 shadow">
 <h2 class="font-bold mb-2">➕ Agregar nuevo artículo</h2>
 
@@ -63,10 +62,10 @@ Agregar
 
 <script type="module">
 
-/* ===== FIREBASE ===== */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ===== FIREBASE CONFIG ===== */
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZOqWiu3SfwlldceYZ6wt9jDXriAE8uJ0",
@@ -81,7 +80,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* ===== DATOS ORIGINALES COMPLETOS (NO SE ELIMINÓ NADA) ===== */
+/* ===== DATOS ORIGINALES COMPLETOS ===== */
 
 const dataInit = {
 "🔌 Electrodomésticos":[
@@ -114,33 +113,39 @@ const dataInit = {
 ]
 };
 
-let data = {};
+/* 👇 CLAVE IMPORTANTE */
+let data = dataInit;
 
-/* ===== FIREBASE FUNCIONES ===== */
-
-async function save(){
-  cleanEmptyCategories();
-  await setDoc(doc(db, "compras", "listaPrincipal"), {
-    datos: data
-  });
-  render();
-}
+/* ===== FIREBASE ===== */
 
 async function loadData(){
-  const docRef = doc(db, "compras", "listaPrincipal");
-  const docSnap = await getDoc(docRef);
+  try{
+    const docRef = doc(db, "compras", "listaPrincipal");
+    const docSnap = await getDoc(docRef);
 
-  if (docSnap.exists()) {
-    data = docSnap.data().datos;
-  } else {
-    data = dataInit;
-    await save();
+    if (docSnap.exists()) {
+      data = docSnap.data().datos;
+    }
+  } catch(e){
+    console.log("Firebase no disponible aún");
   }
 
   render();
 }
 
-/* ===== UTILIDADES ===== */
+async function save(){
+  try{
+    await setDoc(doc(db, "compras", "listaPrincipal"), {
+      datos: data
+    });
+  } catch(e){
+    console.log("No se pudo guardar en Firebase");
+  }
+
+  render();
+}
+
+/* ===== RESTO ORIGINAL ===== */
 
 function cleanEmptyCategories(){
   for(let cat in data){
@@ -149,8 +154,6 @@ function cleanEmptyCategories(){
     }
   }
 }
-
-/* ===== RESTO DEL CÓDIGO ORIGINAL ===== */
 
 window.renameCategory = function(oldName){
   let newName = prompt("Nuevo nombre:", oldName);
@@ -248,10 +251,8 @@ function render(){
     header.innerHTML=`
       <h2 class="font-bold text-lg">${cat}</h2>
       <div>
-        <button onclick="renameCategory('${cat}')"
-        class="text-blue-600 mr-3">✏️</button>
-        <button onclick="deleteCategory('${cat}')"
-        class="text-red-600">🗑️</button>
+        <button onclick="renameCategory('${cat}')" class="text-blue-600 mr-3">✏️</button>
+        <button onclick="deleteCategory('${cat}')" class="text-red-600">🗑️</button>
       </div>
     `;
     cont.appendChild(header);
@@ -266,16 +267,13 @@ function render(){
       <div class="w-full">
         <input type="checkbox" ${it[2]?"checked":""}
         onclick="toggle('${cat}',${i})">
-
         <input value="${it[0]}"
         onchange="updateName('${cat}',${i},this.value)"
         class="border p-1 rounded w-1/2 ${it[2]?'bought':''}">
-
         RD$ <input type="number" value="${it[1]}"
         onchange="updatePrice('${cat}',${i},this.value)"
         class="border w-24 p-1 rounded">
       </div>
-
       <button onclick="delItem('${cat}',${i})"
       class="text-red-500 text-xl ml-2">×</button>
       `;
@@ -288,26 +286,6 @@ function render(){
   remainSpan.textContent=remain.toLocaleString();
 
   populateCategories();
-}
-
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
-window.installApp = function(){
-  if(deferredPrompt){
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; });
-  } else {
-    alert("En iPhone toca Compartir → Agregar a pantalla de inicio 📱");
-  }
-}
-
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
 }
 
 loadData();
